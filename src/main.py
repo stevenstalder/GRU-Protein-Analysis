@@ -1,20 +1,11 @@
-import torch
-from pathlib import Path
-from data.download import *
-from data.dataloader import *
+import os
+os.chdir("..\\src")
 
-base_path = Path(__file__).resolve().parents[1]
-data_path = base_path / "tape_data"
+from __init__ import *
 
-get_tape_data()
+"""
+Pytorch Lightning training, validation and testing here. Maybe with visualizations.
+"""
 
-### Testing stuff ###
-dataset = JsonDataset(data_path / "test" / "test.json")
-dataloader = DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
 
-for batch in dataloader:
-    X, y = batch
-    print(X)
-    print(y)
-    break
 
