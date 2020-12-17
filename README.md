@@ -5,7 +5,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/stevenstalder/GRU-Protein-Analysis">
-    <img src="https://media.nature.com/lw800/magazine-assets/d41586-019-01357-6/d41586-019-01357-6_16964586.jpg" alt="Logo" width="800">
+    <img src="https://www.gannett-cdn.com/presto/2020/12/03/USAT/dcb849fd-63f8-4bca-8b61-7b364eb808bc-ca_1204NID_Protein_Fold_large_online.jpg" alt="Logo" width="500">
   </a>
 
   <h3 align="center">Examining Gated Recurrent Network Architectures in Protein Analysis</h3>
@@ -30,13 +30,15 @@ Add text here
 
 ## Contact
 
-Steven Stalder  - staldest@student.ethz.ch
-Michael Sommer  - sommemic@student.ethz.ch
-Donal Naylor  - dnaylor@student.ethz.ch
+Steven Stalder  - staldest@student.ethz.ch <br>
+Michael Sommer  - sommemic@student.ethz.ch <br>
+Donal Naylor  - dnaylor@student.ethz.ch <br>
 Lukas Klein  - luklein@student.ethz.ch
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
-[license-url]: https://github.com/ #Add
+
+[license-url]: https://github.com/
+
 
