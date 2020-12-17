@@ -5,7 +5,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/stevenstalder/GRU-Protein-Analysis">
-    <img src="https://miro.medium.com/max/680/1*b1zFnLOeM36CBsF4lA7pvQ.gif" alt="Logo" width="500">
+    <img src="https://miro.medium.com/max/680/1*b1zFnLOeM36CBsF4lA7pvQ.gif" alt="Logo" width="250">
   </a>
 
   <h3 align="center">Examining Gated Recurrent Network Architectures in Protein Analysis</h3>
