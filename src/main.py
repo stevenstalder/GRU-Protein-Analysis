@@ -1,5 +1,5 @@
 import os
-os.chdir("..\\src")
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from __init__ import *
 
