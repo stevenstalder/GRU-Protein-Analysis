@@ -7,7 +7,7 @@ from data.dataloader import *
 Import dataloaders and downloads data if respective folders are empty.
 """
 
-base_path = Path(__file__).resolve().parents[1]
+base_path = Path(__file__).resolve().parents[2]
 data_path = base_path / "tape_data"
 
 get_tape_data()
