@@ -34,7 +34,6 @@ class SimpleConv(nn.Module):
                  dropout: float = 0.):
         super().__init__()
         self.main = nn.Sequential(
-            nn.BatchNorm1d(in_dim),  # Added this
             weight_norm(nn.Conv1d(in_dim, hid_dim, 5, padding=2), dim=None),
             nn.ReLU(),
             nn.Dropout(dropout, inplace=True),
@@ -46,7 +45,7 @@ class SimpleConv(nn.Module):
         x = x.transpose(1, 2).contiguous()
         return x
 
-class SequenceToSequenceClassificationHead(nn.Module):
+class Classifier_CNN(nn.Module):
 
     def __init__(self,
                  hidden_size: int,
@@ -60,14 +59,4 @@ class SequenceToSequenceClassificationHead(nn.Module):
 
     def forward(self, sequence_output, targets=None):
         sequence_logits = self.classify(sequence_output)
-        outputs = (sequence_logits,)
-        if targets is not None:
-            loss_fct = nn.CrossEntropyLoss(ignore_index=self._ignore_index)
-            classification_loss = loss_fct(
-                sequence_logits.view(-1, self.num_labels), targets.view(-1))
-            acc_fct = Accuracy(ignore_index=self._ignore_index)
-            metrics = {'accuracy':
-                       acc_fct(sequence_logits.view(-1, self.num_labels), targets.view(-1))}
-            loss_and_metrics = (classification_loss, metrics)
-            outputs = (loss_and_metrics,) + outputs
-        return outputs  # (loss), sequence_logits
+        return sequence_logits  # (loss), sequence_logits

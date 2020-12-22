@@ -2,55 +2,63 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from torch import optim, Tensor
+from torch.nn.utils.rnn import pad_sequence
 import pytorch_lightning as pl
 from pytorch_lightning.metrics.functional import accuracy
 
+import numpy as np
 from test_tube import Experiment, HyperOptArgumentParser
 
 from utils.sequenceclassifier import *
+from utils.argparser import *
+from utils.tokenizer import *
 
-
-class GRUNet(nn.Module):
+class Net_GRU(nn.Module):
     def __init__(self):
         super().__init__()
+        parser = get_parser()
         self.hparams = parser.parse_args()
 
         self.gru = nn.GRU(
-            input_size=self.hparams.input_size,
-            hidden_size=self.hparams.hidden_size,
+            input_size=self.hparams.gru_input_size,
+            hidden_size=self.hparams.gru_hidden_size,
             batch_first=True,
             num_layers=self.hparams.gru_layers,
-            bidirectional=self.hparams.bidirectional,
+            bidirectional=self.hparams.gru_bidirectional,
             dropout=self.hparams.gru_dropout,
         )
-        self.hidden_out_size = (
-            self.hparams.hidden_size
-            * (self.hparams.bidirectional + 1)
+        self.hidden_lin_size = (
+            self.hparams.gru_hidden_size
+            * (self.hparams.gru_bidirectional + 1)
         )
-        self.linear = nn.Linear(self.hidden_out_size, 1)
+        self.linear = nn.Linear(self.hidden_lin_size,
+                                self.hparams.gru_hidden_out_size)
 
     def forward(self, x):
         outputs, _ = self.gru(x)
-        # outputs: [B, T, num_direction * H]
+        # outputs: [B, A, num_direction * E]
         y = self.linear(outputs)
         return y
 
 
 
-class GRUEncoder(nn.Module):
+class Encoder_GRU(nn.Module):
     def __init__(self):
         super().__init__()
 
+        parser = get_parser()
         self.hparams = parser.parse_args()
+        self.tokenizer = TAPETokenizer(vocab="iupac")
+        self.token_emb = nn.Embedding(self.hparams.vocab_size, self.hparams.gru_input_size)
 
-        self.token_emb = nn.Embedding(
-            self.hparams.vocab_size, self.hparams.input_size)
-
-        self.gru = GRUNet()
+        self.gru = Net_GRU()
 
     def forward(self, x):
-        embeddings = self.token_emb(x)
-        output, _ = self.gru(embeddings)
+        protein_encoded = [torch.tensor(self.tokenizer.encode(item).tolist()) for item in np.asarray(x)]
+        protein_encoded_tensor = torch.tensor(pad_sequence(protein_encoded, batch_first=True))
+
+        embeddings = self.token_emb(protein_encoded_tensor)
+        output = self.gru(embeddings)
         return output
 
 
@@ -58,9 +66,12 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def __init__(self):
         super().__init__()
 
-        self.Encoder = GRUEncoder()
+        parser = get_parser()
+        self.hparams = parser.parse_args()
 
-        self.Classifier = SequenceToSequenceClassificationHead()
+        self.Encoder = Encoder_GRU()
+
+        self.Classifier = Classifier_CNN(hidden_size=524, num_labels=1)
 
     def forward(self, x):
         encoding = self.Encoder(x)
@@ -71,7 +82,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         x, y = batch
         # 1. Forward pass
         l = self(x)
-
+        
         # 2. Loss
         loss = F.cross_entropy(l, y.type(torch.LongTensor))
 
@@ -84,7 +95,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
-
+        
         loss = F.cross_entropy(l, y.type(torch.LongTensor))
         acc = accuracy(l, y.type(torch.LongTensor))
 
@@ -94,11 +105,18 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
+        l = torch.tensor(pad_sequence(l, batch_first=True))
+        y = torch.tensor(pad_sequence(y, batch_first=True))
 
-        loss = F.cross_entropy(l, y.type(torch.LongTensor))
-        acc = accuracy(l, y.type(torch.LongTensor))
+        loss_fct = nn.CrossEntropyLoss(
+                    ignore_index=0)
 
-        self.log('val_loss', loss, on_epoch=True)
+        classification_loss = loss_fct(
+            l.view(-1, 1), y.view(-1))
+        acc_fct = Accuracy(ignore_index=0)
+        acc = acc_fct(l.view(-1, 1), y.view(-1))
+
+        self.log('val_loss', classification_loss, on_epoch=True)
         self.log('val_acc', acc, on_epoch=True, prog_bar=True)
 
     def configure_optimizers(self):

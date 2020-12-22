@@ -1,19 +1,20 @@
-from configargparse import ArgumentParser
-import argparse
+from argparse import ArgumentParser
 
 '''
 This file contains the declaration of our argument parser
-
-GRU: (for later)
-input_size: int = 128, hidden_size: int = 1024, gru_layers: int = 3,
-                 hidden_out_size: int = 768, gru_dropout: float = 0.2, 
-                 bidirectional: bool = False,  vocab_size: int = 30,
-                 num_classes: int = 2, learning_rate: float = 1e-4
 '''
 
 def get_parser():
-    parser = ArgumentParser(description='Protein SS3 Task',
-                            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = ArgumentParser(description='Protein SS3 Task')
+    # General Model Parameter
     parser.add_argument("--learning_rate", default=1e-4, type=float)
+    # GRU Encoder
+    parser.add_argument("--gru_input_size", default=128, type=int)
+    parser.add_argument("--gru_hidden_size", default=1024, type=int)
+    parser.add_argument("--gru_layers", default=3, type=int)
+    parser.add_argument("--gru_hidden_out_size", default=524, type=int)
+    parser.add_argument("--gru_dropout", default=0.2, type=float)
+    parser.add_argument("--gru_bidirectional", default=False, type=bool)
+    parser.add_argument("--vocab_size", default=30, type=int)
 
     return parser
