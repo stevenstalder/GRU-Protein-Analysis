@@ -22,6 +22,7 @@ early_stop_callback = EarlyStopping(
 model = Protein_GRU_Sequencer()
 
 ### Train Model ###
-trainer = pl.Trainer(logger=False, callbacks=[early_stop_callback])
+use_gpu = 1 if torch.cuda.device_count() > 0 else 0
+trainer = pl.Trainer(logger=False, callbacks=[early_stop_callback], gpus=use_gpu)
 trainer.fit(model, train_loader, val_loader)
 
