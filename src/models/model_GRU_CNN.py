@@ -33,13 +33,14 @@ class Protein_GRU_Sequencer(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         x, y = batch
-        # 1. Forward pass
         l = self(x)
+        y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
-        # 2. Loss
-        loss = F.cross_entropy(l, y.type(torch.LongTensor))
+        loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
+        loss = loss_fct(l.view(-1, 3), y.view(-1))
 
-        acc = accuracy(l, y.type(torch.LongTensor))
+        acc_fct = Accuracy(ignore_index=-1)
+        acc = acc_fct(l.view(-1, 3), y.view(-1))
 
         self.log('loss', loss, on_epoch=True)
         self.log('acc', acc, on_epoch=True, prog_bar=True)
@@ -48,9 +49,13 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
+        y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
-        loss = F.cross_entropy(l, y.type(torch.LongTensor))
-        acc = accuracy(l, y.type(torch.LongTensor))
+        loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
+        loss = loss_fct(l.view(-1, 3), y.view(-1))
+
+        acc_fct = Accuracy(ignore_index=-1)
+        acc = acc_fct(l.view(-1, 3), y.view(-1))
 
         self.log('test_loss', loss, on_epoch=True)
         self.log('test_acc', acc, on_epoch=True, prog_bar=True)
@@ -61,12 +66,12 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
-        classification_loss = loss_fct(l.view(-1, 3), y.view(-1))
+        loss = loss_fct(l.view(-1, 3), y.view(-1))
 
         acc_fct = Accuracy(ignore_index=-1)
         acc = acc_fct(l.view(-1, 3), y.view(-1))
 
-        self.log('val_loss', classification_loss, on_epoch=True)
+        self.log('val_loss', loss, on_epoch=True)
         self.log('val_acc', acc, on_epoch=True, prog_bar=True)
 
     def configure_optimizers(self):
