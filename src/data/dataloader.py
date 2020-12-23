@@ -16,5 +16,5 @@ class JsonDataset(IterableDataset):
 #change this to output what we want (most importantly character encoding)
 def collate_fn(batch):
 	primary = tuple([item[0] for item in batch])
-	labels = tuple([torch.IntTensor(item[1]) for item in batch])
+	labels = tuple([torch.LongTensor(item[1]) for item in batch])
 	return [primary, labels]
