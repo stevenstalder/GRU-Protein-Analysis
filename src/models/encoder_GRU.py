@@ -55,7 +55,7 @@ class Encoder_GRU(nn.Module):
 
     def forward(self, x):
         protein_encoded = [torch.tensor(self.tokenizer.encode(item).tolist()) for item in np.asarray(x)]
-        protein_encoded_tensor = torch.tensor(pad_sequence(protein_encoded, batch_first=True))
+        protein_encoded_tensor = pad_sequence(protein_encoded, batch_first=True)
         if torch.cuda.is_available():
             protein_encoded_tensor = protein_encoded_tensor.cuda()
 

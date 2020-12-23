@@ -34,7 +34,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
-        y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
+        y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
@@ -49,7 +49,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
-        y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
+        y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
@@ -63,7 +63,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
-        y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
+        y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
