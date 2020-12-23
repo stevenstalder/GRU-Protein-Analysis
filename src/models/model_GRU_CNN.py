@@ -9,7 +9,6 @@ from pytorch_lightning.metrics.functional import accuracy
 import numpy as np
 from test_tube import Experiment, HyperOptArgumentParser
 
-from utils.sequenceclassifier import *
 from utils.argparser import *
 from utils.tokenizer import *
 from models.encoder_GRU import *
@@ -25,7 +24,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
 
         self.Encoder = Encoder_GRU()
 
-        self.Classifier = Classifier_CNN(hidden_size=524, num_labels=1)
+        self.Classifier = Classifier_CNN(in_dim=self.hparams.gru_hidden_out_size, out_dim=3)
 
     def forward(self, x):
         encoding = self.Encoder(x)

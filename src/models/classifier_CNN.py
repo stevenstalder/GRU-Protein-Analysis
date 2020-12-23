@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 from torch.nn.utils.weight_norm import weight_norm
 
-class CNNClassificationHead(nn.Module):
+class Classifier_CNN(nn.Module):
 
     def __init__(self,
                  in_dim: int = 2048,
