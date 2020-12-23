@@ -58,13 +58,14 @@ class Protein_GRU_Sequencer(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         x, y = batch
         l = self(x)
-        l = torch.tensor(pad_sequence(l, batch_first=True))
-        y = torch.tensor(pad_sequence(y, batch_first=True))
+        #l = torch.tensor(pad_sequence(l, batch_first=True, padding_value=7))
+        #y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=7))
 
-        loss_fct = nn.CrossEntropyLoss(ignore_index=0)
+
+        loss_fct = nn.CrossEntropyLoss(ignore_index=7)
         classification_loss = loss_fct(l.view(-1, 1), y.view(-1))
 
-        acc_fct = Accuracy(ignore_index=0)
+        acc_fct = Accuracy(ignore_index=7)
         acc = acc_fct(l.view(-1, 1), y.view(-1))
 
         self.log('val_loss', classification_loss, on_epoch=True)

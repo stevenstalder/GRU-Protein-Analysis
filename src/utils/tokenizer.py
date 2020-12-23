@@ -142,7 +142,7 @@ class TAPETokenizer():
 
     def encode(self, text: str) -> np.ndarray:
         tokens = self.tokenize(text)
-        tokens = self.add_special_tokens(tokens)
+        #tokens = self.add_special_tokens(tokens)
         token_ids = self.convert_tokens_to_ids(tokens)
         return np.array(token_ids, np.int64)
 
