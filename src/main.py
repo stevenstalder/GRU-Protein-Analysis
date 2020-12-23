@@ -25,3 +25,4 @@ model = Protein_GRU_Sequencer()
 trainer = pl.Trainer(logger=False, callbacks=[early_stop_callback], gpus=torch.cuda.device_count())
 trainer.fit(model, train_loader, val_loader)
 
+trainer.test(test_dataloader=test_loader)
