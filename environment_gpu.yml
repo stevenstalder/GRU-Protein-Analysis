@@ -1,9 +1,0 @@
-name: gru_protein_gpu
-channels:
-  - defaults
-dependencies:
-  - cudatoolkit=10.2
-  - torchaudio
-  - pytorch
-  - torchvision
-prefix: /home/stevey/miniconda3/envs/torch
