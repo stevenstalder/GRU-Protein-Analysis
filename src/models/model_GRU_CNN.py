@@ -24,7 +24,7 @@ class Protein_GRU_Sequencer(pl.LightningModule):
 
         self.Encoder = Encoder_GRU()
 
-        self.Classifier = Classifier_CNN(in_dim=self.hparams.gru_hidden_out_size, out_dim=3)
+        self.Classifier = Classifier_CNN()
 
     def forward(self, x):
         encoding = self.Encoder(x)
@@ -37,10 +37,10 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
-        loss = loss_fct(l.view(-1, 3), y.view(-1))
+        loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         acc_fct = Accuracy(ignore_index=-1)
-        acc = acc_fct(l.view(-1, 3), y.view(-1))
+        acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('loss', loss, on_epoch=True)
         self.log('acc', acc, on_epoch=True, prog_bar=True)
@@ -52,10 +52,10 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
-        loss = loss_fct(l.view(-1, 3), y.view(-1))
+        loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         acc_fct = Accuracy(ignore_index=-1)
-        acc = acc_fct(l.view(-1, 3), y.view(-1))
+        acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('test_loss', loss, on_epoch=True)
         self.log('test_acc', acc, on_epoch=True, prog_bar=True)
@@ -66,10 +66,10 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         y = torch.tensor(pad_sequence(y, batch_first=True, padding_value=-1))
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
-        loss = loss_fct(l.view(-1, 3), y.view(-1))
+        loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         acc_fct = Accuracy(ignore_index=-1)
-        acc = acc_fct(l.view(-1, 3), y.view(-1))
+        acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('val_loss', loss, on_epoch=True)
         self.log('val_acc', acc, on_epoch=True, prog_bar=True)
