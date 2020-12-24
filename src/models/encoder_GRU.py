@@ -48,7 +48,7 @@ class Encoder_GRU(nn.Module):
 
         parser = get_parser()
         self.hparams = parser.parse_args()
-        self.tokenizer = TAPETokenizer(vocab="iupac")
+        self.tokenizer = TAPETokenizer(vocab=self.hparams.tokenizer)
         self.token_emb = nn.Embedding(self.hparams.vocab_size, self.hparams.gru_input_size)
 
         self.gru = Net_GRU()

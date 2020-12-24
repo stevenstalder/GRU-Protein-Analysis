@@ -25,10 +25,11 @@ def get_parser():
     parser.add_argument("--gru_input_size", default=128, type=int)
     parser.add_argument("--gru_hidden_size", default=1024, type=int)
     parser.add_argument("--gru_layers", default=3, type=int)
-    parser.add_argument("--gru_hidden_out_size", default=726, type=int)
+    parser.add_argument("--gru_hidden_out_size", default=2048, type=int)
     parser.add_argument("--gru_dropout", default=0.2, type=float)
     parser.add_argument("--gru_bidirectional", default=False, type=str2bool)
     parser.add_argument("--vocab_size", default=30, type=int)
+    parser.add_argument("--tokenizer", choices=["iupac", "unirep"], default="iupac", type=str)
     # CNN Classifier Parameters
     parser.add_argument("--cnn_hidden_size", default=512, type=int)
     parser.add_argument("--cnn_dropout", default=0.0, type=float)
