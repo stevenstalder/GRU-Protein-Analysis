@@ -12,7 +12,7 @@ Pytorch Lightning training, validation and testing here. Maybe with visualizatio
 ### Define Early Stopping condition ###
 early_stop_callback = EarlyStopping(
    monitor='val_acc',
-   min_delta=0.0001,
+   min_delta=0.001,
    patience=20,
    verbose=False,
    mode='max'
