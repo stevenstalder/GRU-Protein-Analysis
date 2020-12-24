@@ -13,7 +13,7 @@ Pytorch Lightning training, validation and testing here. Maybe with visualizatio
 early_stop_callback = EarlyStopping(
    monitor='val_acc',
    min_delta=0.001,
-   patience=20,
+   patience=10,
    verbose=False,
    mode='max'
 )
