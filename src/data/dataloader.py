@@ -13,6 +13,11 @@ class JsonDataset(IterableDataset):
     		for sample in data:
     			yield sample['primary'], sample['ss3']
 
+    def __len__(self):
+        with open(self.file) as f:
+            data = json.load(f)
+            return len(data)
+
 #change this to output what we want (most importantly character encoding)
 def collate_fn(batch):
 	primary = tuple([item[0] for item in batch])
