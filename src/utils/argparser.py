@@ -18,9 +18,10 @@ def str2bool(v):
 def get_parser():
     parser = ArgumentParser(description='Protein SS3 Task')
     # Trainer Parameters
-    
+    parser.add_argument("--logger", default=False, type=str2bool)
     # General Model Parameters
     parser.add_argument("--learning_rate", default=1e-4, type=float)
+    parser.add_argument("--seed", default=42, type=int)
     # GRU Encoder Parameters
     parser.add_argument("--gru_input_size", default=128, type=int)
     parser.add_argument("--gru_hidden_size", default=1024, type=int)

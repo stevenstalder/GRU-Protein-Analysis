@@ -36,7 +36,7 @@ class Net_GRU(nn.Module):
 
     def forward(self, x):
         outputs, _ = self.gru(x)
-        # outputs: [B, A, num_direction * E]
+        # outputs: [Batch, AminoAcid, num_direction * EmbeddingDim]
         y = self.linear(outputs)
         return y
 
