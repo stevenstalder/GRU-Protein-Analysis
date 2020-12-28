@@ -26,11 +26,11 @@ early_stop_callback = EarlyStopping(
 
 ### Define Model ###
 if hparams.encoder_type == "gru":
-	model = Protein_GRU_Sequencer()
+    model = Protein_GRU_Sequencer()
 elif hparams.encoder_type == "lstm":
-	model = Protein_LSTM_Sequencer()
+    model = Protein_LSTM_Sequencer()
 else:
-	raise Exception('Unknown encoder type: ' + hparams.encoder_type)
+    raise Exception('Unknown encoder type: ' + hparams.encoder_type)
 
 
 # Set Logging
