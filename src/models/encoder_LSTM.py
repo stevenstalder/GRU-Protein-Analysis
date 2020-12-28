@@ -13,13 +13,13 @@ from utils.sequenceclassifier import *
 from utils.argparser import *
 from utils.tokenizer import *
 
-class Net_GRU(nn.Module):
+class Net_LSTM(nn.Module):
     def __init__(self):
         super().__init__()
         parser = get_parser()
         self.hparams = parser.parse_args()
 
-        self.gru = nn.GRU(
+        self.lstm = nn.LSTM(
             input_size=self.hparams.enc_input_size,
             hidden_size=self.hparams.enc_hidden_size,
             batch_first=True,
@@ -35,14 +35,14 @@ class Net_GRU(nn.Module):
                                 self.hparams.enc_hidden_out_size)
 
     def forward(self, x):
-        outputs, _ = self.gru(x)
+        outputs, _ = self.lstm(x)
         # outputs: [Batch, AminoAcid, num_direction * EmbeddingDim]
         y = self.linear(outputs)
         return y
 
 
 
-class Encoder_GRU(nn.Module):
+class Encoder_LSTM(nn.Module):
     def __init__(self):
         super().__init__()
 
@@ -51,7 +51,7 @@ class Encoder_GRU(nn.Module):
         self.tokenizer = TAPETokenizer(vocab=self.hparams.tokenizer)
         self.token_emb = nn.Embedding(self.hparams.vocab_size, self.hparams.enc_input_size)
 
-        self.gru = Net_GRU()
+        self.lstm = Net_LSTM()
 
     def forward(self, x):
         protein_encoded = [torch.tensor(self.tokenizer.encode(item).tolist()) for item in np.asarray(x)]
@@ -60,7 +60,7 @@ class Encoder_GRU(nn.Module):
             protein_encoded_tensor = protein_encoded_tensor.cuda()
 
         embeddings = self.token_emb(protein_encoded_tensor)
-        output = self.gru(embeddings)
+        output = self.lstm(embeddings)
         return output
 
 

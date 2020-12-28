@@ -20,15 +20,16 @@ def get_parser():
     # Trainer Parameters
     parser.add_argument("--logger", default=False, type=str2bool)
     # General Model Parameters
+    parser.add_argument("--encoder_type", choices=["gru", "lstm"], default="gru", type=str)
     parser.add_argument("--learning_rate", default=1e-4, type=float)
     parser.add_argument("--seed", default=42, type=int)
-    # GRU Encoder Parameters
-    parser.add_argument("--gru_input_size", default=128, type=int)
-    parser.add_argument("--gru_hidden_size", default=1024, type=int)
-    parser.add_argument("--gru_layers", default=3, type=int)
-    parser.add_argument("--gru_hidden_out_size", default=2048, type=int)
-    parser.add_argument("--gru_dropout", default=0.2, type=float)
-    parser.add_argument("--gru_bidirectional", default=False, type=str2bool)
+    # GRU/LSTM Encoder Parameters
+    parser.add_argument("--enc_input_size", default=128, type=int)
+    parser.add_argument("--enc_hidden_size", default=1024, type=int)
+    parser.add_argument("--enc_layers", default=3, type=int)
+    parser.add_argument("--enc_hidden_out_size", default=2048, type=int)
+    parser.add_argument("--enc_dropout", default=0.2, type=float)
+    parser.add_argument("--enc_bidirectional", default=False, type=str2bool)
     parser.add_argument("--vocab_size", default=30, type=int)
     parser.add_argument("--tokenizer", choices=["iupac", "unirep"], default="iupac", type=str)
     # CNN Classifier Parameters
