@@ -34,6 +34,7 @@ def get_parser():
     parser.add_argument("--vocab_size", default=30, type=int)
     parser.add_argument("--tokenizer", choices=["iupac", "unirep"], default="iupac", type=str)
     # CNN Classifier Parameters
+    parser.add_argument("--cnn_dilated", default=False, type=str2bool)
     parser.add_argument("--cnn_hidden_size", default=512, type=int)
     parser.add_argument("--cnn_dropout", default=0.0, type=float)
     parser.add_argument("--num_classes", default=3, type=int)
