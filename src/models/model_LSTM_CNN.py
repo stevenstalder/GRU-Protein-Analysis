@@ -39,7 +39,7 @@ class Protein_LSTM_Sequencer(pl.LightningModule):
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
-        acc_fct = Accuracy(ignore_index=-1)
+        acc_fct = TrainAccuracy(ignore_index=-1)
         acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('loss', loss, on_epoch=True)
