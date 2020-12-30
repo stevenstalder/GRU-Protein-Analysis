@@ -8,22 +8,38 @@ Sequence to sequence classification model applied on output of encoder model.
 Only useable for the SS3 classification task.
 """
 
-class Accuracy(nn.Module):
+class TrainAccuracy(nn.Module):
 
     def __init__(self, ignore_index: int = -100):
         super().__init__()
         self.ignore_index = ignore_index
 
     def forward(self, inputs, target):
-        return accuracy(inputs, target, self.ignore_index)
+        return train_accuracy(inputs, target, self.ignore_index)
+
+class TestAccuracy(nn.Module):
+
+    def __init__(self, ignore_index: int = -100):
+        super().__init__()
+        self.ignore_index = ignore_index
+
+    def forward(self, inputs, target):
+        return test_accuracy(inputs, target, self.ignore_index)
 
 
-def accuracy(logits, labels, ignore_index: int = -100):
+def train_accuracy(logits, labels, ignore_index: int = -100):
     with torch.no_grad():
         valid_mask = (labels != ignore_index)
         predictions = logits.float().argmax(-1)
         correct = (predictions == labels) * valid_mask
         return correct.sum().float() / valid_mask.sum().float()
+
+def test_accuracy(logits, labels, ignore_index: int = -100):
+    with torch.no_grad():
+        valid_mask = (labels != ignore_index)
+        predictions = logits.float().argmax(-1)
+        correct = (predictions == labels) * valid_mask
+        return (correct.sum().float(),valid_mask.sum().float())
 
 class SimpleConv(nn.Module):
 
