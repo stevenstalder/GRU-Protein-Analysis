@@ -22,6 +22,7 @@ def get_parser():
     # General Model Parameters
     parser.add_argument("--encoder_type", choices=["gru", "lstm"], default="gru", type=str)
     parser.add_argument("--learning_rate", default=1e-4, type=float)
+    parser.add_argument("--batch_size", default=4, type=int)
     parser.add_argument("--seed", default=42, type=int)
     # GRU/LSTM Encoder Parameters
     parser.add_argument("--enc_input_size", default=128, type=int)
