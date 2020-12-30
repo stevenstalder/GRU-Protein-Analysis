@@ -4,13 +4,13 @@ import torch.nn.functional as F
 from torch import optim, Tensor
 from torch.nn.utils.rnn import pad_sequence
 import pytorch_lightning as pl
-from pytorch_lightning.metrics.functional import accuracy
 
 import numpy as np
 from test_tube import Experiment, HyperOptArgumentParser
 
 from utils.argparser import *
 from utils.tokenizer import *
+from utils.accuracy import *
 from models.encoder_LSTM import *
 from models.classifier_CNN import *
 

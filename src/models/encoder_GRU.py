@@ -9,7 +9,6 @@ from pytorch_lightning.metrics.functional import accuracy
 import numpy as np
 from test_tube import Experiment, HyperOptArgumentParser
 
-from utils.sequenceclassifier import *
 from utils.argparser import *
 from utils.tokenizer import *
 
