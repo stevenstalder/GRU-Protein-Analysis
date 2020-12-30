@@ -15,7 +15,7 @@ class Classifier_CNN(nn.Module):
         first_conv_layer = nn.Conv1d(self.hparams.enc_hidden_out_size, self.hparams.cnn_hidden_size, 5, dilation=2, padding=4) if self.hparams.cnn_dilated \
                                 else nn.Conv1d(self.hparams.enc_hidden_out_size, self.hparams.cnn_hidden_size, 5, padding=2)
         self.cnn = nn.Sequential(
-            nn.BatchNorm1d(self.hparams.enc_hidden_out_size),  # Added this
+            nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
             weight_norm(first_conv_layer, dim=None),
             nn.ReLU(),
             nn.Dropout(self.hparams.cnn_dropout, inplace=True),
