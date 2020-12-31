@@ -21,6 +21,7 @@ def get_parser():
     parser.add_argument("--logger", default=False, type=str2bool)
     # General Model Parameters
     parser.add_argument("--encoder_type", choices=["gru", "lstm"], default="gru", type=str)
+    parser.add_argument("--classifier_type", choices=["cnn", "autoregressive"], default="cnn", type=str)
     parser.add_argument("--learning_rate", default=1e-4, type=float)
     parser.add_argument("--batch_size", default=4, type=int)
     parser.add_argument("--seed", default=42, type=int)

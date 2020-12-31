@@ -25,7 +25,9 @@ early_stop_callback = EarlyStopping(
 )
 
 ### Define Model ###
-if hparams.encoder_type == "gru":
+if hparams.classifier_type == "autoregressive":
+    model = Protein_GRU_Sequencer_Autoregressive()
+elif hparams.encoder_type == "gru":
     model = Protein_GRU_Sequencer()
 elif hparams.encoder_type == "lstm":
     model = Protein_LSTM_Sequencer()
