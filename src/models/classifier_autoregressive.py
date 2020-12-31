@@ -12,7 +12,7 @@ class MaskedConv1d(nn.Conv1d):
 
         _, depth, length = self.weight.size()
         self.mask.fill_(1)
-            self.mask[:,:,length//2+1:] = 0
+        self.mask[:,:,length//2+1:] = 0
 
 
     def forward(self, x):
@@ -40,14 +40,15 @@ class Classifier_autoregressive(nn.Module):
             nn.Dropout(self.hparams.cnn_dropout, inplace=True))
 
         self.autoreg = nn.Sequential(    
-            #todo this should be 3 ? probably (number of channels)        
-            nn.BatchNorm1d(self.hparams.num_classes),
-            weight_norm(first_conv_layer, dim=None),
+            #todo this should be 3 ? probably (number of channels)   
+            #todo sth weird here     
+            nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
+            weight_norm(first_conv_layer_autoreg, dim=None),
             nn.ReLU(),
             nn.Dropout(self.hparams.cnn_dropout, inplace=True))
 
         self.combined = nn.Sequential(
-            weight_norm(Conv1d(self.hparams.cnn_hidden_size*2, self.hparams.num_classes, 3, padding=1), dim=None))
+            weight_norm(nn.Conv1d(self.hparams.cnn_hidden_size*2, self.hparams.num_classes, 3, padding=1), dim=None))
 
     def forward(self, x, y):
         x = x.transpose(1, 2)

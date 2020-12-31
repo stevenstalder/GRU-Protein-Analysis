@@ -12,7 +12,7 @@ from utils.argparser import *
 from utils.tokenizer import *
 from utils.accuracy import *
 from models.encoder_GRU import *
-from models.classifier_CNN import *
+from models.classifier_autoregressive import *
 
 
 class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
@@ -24,11 +24,11 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
 
         self.Encoder = Encoder_GRU()
 
-        self.Classifier = Classifier_CNN()
+        self.Classifier = Classifier_autoregressive()
 
-    def forward(self, x):
+    def forward(self, x, y):
         encoding = self.Encoder(x)
-        output = self.Classifier(encoding)
+        output = self.Classifier(encoding, y)
         return output
 
     def training_step(self, batch, batch_idx):
@@ -51,7 +51,7 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         l = self(x,y).clone().fill_(0)
-        for i in range(l.size(1))
+        for i in range(l.size(1)):
             l_temp = self(x, l)
             l[:,i] = l_temp[:,i]
 
@@ -81,7 +81,7 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         l = self(x,y).clone().fill_(0)
-        for i in range(l.size(1))
+        for i in range(l.size(1)):
             l_temp = self(x, l)
             l[:,i] = l_temp[:,i]
 
