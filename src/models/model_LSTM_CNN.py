@@ -15,7 +15,7 @@ from models.encoder_LSTM import *
 from models.classifier_CNN import *
 
 
-class Protein_LSTM_Sequencer(pl.LightningModule):
+class Protein_LSTM_Sequencer_CNN(pl.LightningModule):
     def __init__(self):
         super().__init__()
 

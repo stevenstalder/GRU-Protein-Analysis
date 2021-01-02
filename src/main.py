@@ -6,16 +6,18 @@ import pytorch_lightning as pl
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from __init__ import *
 
-parser = get_parser()
-hparams = parser.parse_args()
-
 pl.seed_everything(hparams.seed)
 
 """
-Pytorch Lightning training, validation and testing here. Maybe with visualizations.
+Call all scripts from __init__, define and initialize model, set and activate Tensorboard logging and run training, validation and testing loop.
+early stopping set fix to 10 rounds of no improvement of at least 0.001 validation accuracy.
 """
 
-### Define Early Stopping condition ###
+parser = get_parser()
+hparams = parser.parse_args()
+
+
+# Define Early Stopping condition
 early_stop_callback = EarlyStopping(
    monitor='val_acc',
    min_delta=0.001,
@@ -24,28 +26,28 @@ early_stop_callback = EarlyStopping(
    mode='max'
 )
 
-### Define Model ###
+# Define Model
 if hparams.classifier_type == "autoregressive":
     model = Protein_GRU_Sequencer_Autoregressive()
 elif hparams.encoder_type == "gru":
-    model = Protein_GRU_Sequencer()
+    model = Protein_GRU_Sequencer_CNN()
 elif hparams.encoder_type == "lstm":
-    model = Protein_LSTM_Sequencer()
+    model = Protein_LSTM_Sequencer_CNN()
 else:
     raise Exception('Unknown encoder type: ' + hparams.encoder_type)
 
 
 # Set Logging
-
 if hparams.logger == True:
    log_dir = "tb_logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
    logger = pl.loggers.TensorBoardLogger(log_dir, name='Protein_SS3_Model')
+   # tensorboard --logdir
+   # Paste into command line from /src directory to start tensorboard on local port 6006. 
+   # More infos: https://www.tensorflow.org/tensorboard/get_started
 else:
    logger = False
 
-# tensorboard --logdir # To start tensorboard on local port 6006
-
-### Train Model ###
+# Train, validate and test Model
 trainer = pl.Trainer(logger=logger, callbacks=[early_stop_callback], gpus=torch.cuda.device_count())
 trainer.fit(model, train_loader, val_loader)
 

@@ -14,8 +14,15 @@ from utils.accuracy import *
 from models.encoder_GRU import *
 from models.classifier_CNN import *
 
+"""
+Initialization of the PyTorch Lightning model combining the GRU based encoder and the CNN based classification head.
+To account for different length protein sequences when computing the accuracy, we changed the way they are accumulated 
+for the validation and test set by defining validation_epoch_end(), test_epoch_end (). Cross Entropy Loss and Accuracy are 
+computed on a padded sequence with the padding value of -1 then ignored in the computation.
+"""
 
-class Protein_GRU_Sequencer(pl.LightningModule):
+
+class Protein_GRU_Sequencer_CNN(pl.LightningModule):
     def __init__(self):
         super().__init__()
 
@@ -58,7 +65,6 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('test_loss', loss, on_epoch=True)
-        
         return acc
 
     def test_epoch_end(self, test_step_outputs):
@@ -84,7 +90,6 @@ class Protein_GRU_Sequencer(pl.LightningModule):
         acc = acc_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
 
         self.log('val_loss', loss, on_epoch=True)
-
         return acc
 
     def validation_epoch_end(self, validation_step_outputs):
