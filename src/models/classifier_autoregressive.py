@@ -12,7 +12,7 @@ class MaskedConv1d(nn.Conv1d):
 
         _, depth, length = self.weight.size()
         self.mask.fill_(1)
-        self.mask[:,:,length//2+1:] = 0
+        self.mask[:,:,length//2:] = 0
 
 
     def forward(self, x):
@@ -30,8 +30,8 @@ class Classifier_autoregressive(nn.Module):
         first_conv_layer = nn.Conv1d(self.hparams.enc_hidden_out_size, self.hparams.cnn_hidden_size, 5, dilation=2, padding=4) if self.hparams.cnn_dilated \
                                 else nn.Conv1d(self.hparams.enc_hidden_out_size, self.hparams.cnn_hidden_size, 5, padding=2)
 
-        first_conv_layer_autoreg = MaskedConv1d(self.hparams.num_classes, self.hparams.cnn_hidden_size, 5, dilation=2, padding=4) if self.hparams.cnn_dilated \
-                                else MaskedConv1d(self.hparams.num_classes, self.hparams.cnn_hidden_size, 5, padding=2)
+        first_conv_layer_autoreg = MaskedConv1d(1, self.hparams.cnn_hidden_size, 5, dilation=2, padding=4) if self.hparams.cnn_dilated \
+                                else MaskedConv1d(1, self.hparams.cnn_hidden_size, 5, padding=2)
 
         self.cnn = nn.Sequential(
             nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
@@ -42,7 +42,7 @@ class Classifier_autoregressive(nn.Module):
         self.autoreg = nn.Sequential(    
             #todo this should be 3 ? probably (number of channels)   
             #todo sth weird here     
-            nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
+            #nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
             weight_norm(first_conv_layer_autoreg, dim=None),
             nn.ReLU(),
             nn.Dropout(self.hparams.cnn_dropout, inplace=True))
@@ -53,8 +53,10 @@ class Classifier_autoregressive(nn.Module):
     def forward(self, x, y):
         x = x.transpose(1, 2)
         x = self.cnn(x)
+        batchsize, seqlength = y.size()
+        y = y.view(batchsize, 1, seqlength).float()
         y = self.autoreg(y)
-        xy = torch.cat(x, y, dim=1)
+        xy = torch.cat((x, y), dim=1)
         xy = self.combined(xy)
         xy = xy.transpose(1, 2).contiguous()
         return xy

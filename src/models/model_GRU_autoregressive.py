@@ -51,9 +51,10 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         l = self(x,y).clone().fill_(0)
-        for i in range(l.size(1)):
-            l_temp = self(x, l)
-            l[:,i] = l_temp[:,i]
+        stepsize = self.hparams.autoregressive_steps
+        for i in range(0, l.size(1), stepsize):
+            l_temp = self(x, l.argmax(-1))
+            l[:,i:i+stepsize] = l_temp[:,i:i+stepsize]
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
@@ -66,7 +67,7 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         return acc
     #todo generative
     def test_epoch_end(self, test_step_outputs):
-        total = 0.0
+        total = 0.0 
         total_correct = 0.0
         for acc in test_step_outputs:
             correct, valid = acc
@@ -79,11 +80,13 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         x, y = batch
         y = pad_sequence(y, batch_first=True, padding_value=-1)
-
+        
+        #todo transfer to and from right format
         l = self(x,y).clone().fill_(0)
-        for i in range(l.size(1)):
-            l_temp = self(x, l)
-            l[:,i] = l_temp[:,i]
+        stepsize = self.hparams.autoregressive_steps
+        for i in range(0, l.size(1), stepsize):
+            l_temp = self(x, l.argmax(-1))
+            l[:,i:i+stepsize] = l_temp[:,i:i+stepsize]
 
         loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
         loss = loss_fct(l.view(-1, self.hparams.num_classes), y.view(-1))
