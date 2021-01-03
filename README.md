@@ -72,9 +72,9 @@ prediction. The one tasks we want to take on is the Secondary Structure (SS) pre
 
 ## Usage
 
-###Run the code
+### Run the code
 
-###Reproducing our results
+### Reproducing our results
 
 ## Contact
 
