@@ -32,11 +32,11 @@
 ## About the Project
 
 A fundamental task in understanding evolution and fighting diseases is to gain knowledge about proteins and their
-assembly. Proteins are chains of amino acids formed into a specific structure [Yanofsky et al., 1964]. Due to recent
+assembly. Proteins are chains of amino acids formed into a specific structure [Yanofsky et al., 1964](https://doi.org/10.1126/science.146.3651.1593). Due to recent
 research in deep learning and particularly the Natural Language Processing (NLP) area, certain entities of these structures
 – e.g. where a chain meets again or how it is twisted – can be predicted more accurately. To achieve more
-comparable results, Rao et al. [2019] produced five standardized datasets and specific tasks in the area of protein
-prediction. The one tasks we want to take on is the Secondary Structure (SS) prediction.
+comparable results, Rao et al. [2019](https://www.biorxiv.org/content/early/2019/06/20/676825) produced five standardized datasets and specific tasks in the area of protein
+prediction. In this project we take on the Secondary Structure (SS) prediction.
 
 ## Folder Structure
 ```
@@ -70,11 +70,49 @@ prediction. The one tasks we want to take on is the Secondary Structure (SS) pre
 
 ## Protein Data
 
+We are using the predefined training, validation and test data as provided by the [TAPE group](https://github.com/songlab-cal/tape#data). As defined in TAPE's SS prediction task, we are mapping each amino acid of a protein sequence to one of three labels. Accuracy is reported on a per-amino acid basis on the [CB513 test dataset](https://onlinelibrary.wiley.com/doi/full/10.1002/%28SICI%291097-0134%2819990301%2934%3A4%3C508%3A%3AAID-PROT10%3E3.0.CO%3B2-4).
+
 ## Usage
+
+All essential libraries for the execution of the code are provided in the environment_gpu.yml file from which a new conda environment can be created.
 
 ### Run the code
 
+Once the virtual environment is activated you can run the code as follows:
+
+- Go into the `src` directory.
+  ```sh
+  cd src/
+  ```
+- Run the program with any number of custom arguments as defined in src/utils/argparser.py. For example:
+  ```sh
+  python main.py --encoder_type="gru" --learning_rate=0.01
+  ```
+- If you want to run our code on ETH's Leonhard cluster, submit the same job as above as follows:
+  ```sh
+  bsub -W 24:00 -R "rusage[ngpus_excl_p=1,mem=8192]" "python main.py --encoder_type="gru" --learning_rate=0.01"
+  ```
+
 ### Reproducing our results
+
+For reproducibility, we have fixed a random seed which you can leave at its default value. However, we have performed a reasonable amount of hyperparameter tuning for all of our models and if you wish to reproduce our best results, we recommend running our code as follows (only showing arguments for which the default value needs change):
+
+- For the unidirectional GRU model:
+  ```sh
+  python main.py --cnn_dilated=true --cnn_hidden_size=2048 --learning_rate=0.01
+  ```
+- For the unidirectional LSTM model:
+  ```sh
+  python main.py --cnn_dilated=true --cnn_hidden_size=2048 --learning_rate=0.01 --encoder_type="lstm"
+  ```
+- For the bidirectional GRU model:
+  ```sh
+  python main.py --cnn_dilated=true --enc_bidirectional=true --learning_rate=0.1
+  ```
+- For the bidirectional LSTM model:
+  ```sh
+  python main.py --cnn_dilated=true --enc_bidirectional=true --learning_rate=0.1 --encoder_type="lstm"
+  ```
 
 ## Contact
 
