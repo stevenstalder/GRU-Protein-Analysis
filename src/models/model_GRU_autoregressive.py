@@ -45,12 +45,13 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         self.log('loss', loss, on_epoch=True)
         self.log('acc', acc, on_epoch=True, prog_bar=True)
         return loss
-    #todo generative
+    #
     def test_step(self, batch, batch_idx):
         x, y = batch
         y = pad_sequence(y, batch_first=True, padding_value=-1)
 
-        l = self(x,y).clone().fill_(0)
+        #l = self(x,y).clone().fill_(0)
+        l = torch.rand(self(x,y).size())*3
         stepsize = self.hparams.autoregressive_steps
         for i in range(0, l.size(1), stepsize):
             l_temp = self(x, l.argmax(-1))
@@ -65,7 +66,7 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         self.log('test_loss', loss, on_epoch=True)
         
         return acc
-    #todo generative
+
     def test_epoch_end(self, test_step_outputs):
         total = 0.0 
         total_correct = 0.0
@@ -81,8 +82,9 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         x, y = batch
         y = pad_sequence(y, batch_first=True, padding_value=-1)
         
-        #todo transfer to and from right format
-        l = self(x,y).clone().fill_(0)
+
+        #l = self(x,y).clone().fill_(0)
+        l = (torch.rand(self(x,y).size())*3).cuda()
         stepsize = self.hparams.autoregressive_steps
         for i in range(0, l.size(1), stepsize):
             l_temp = self(x, l.argmax(-1))

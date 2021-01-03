@@ -40,9 +40,9 @@ class Classifier_autoregressive(nn.Module):
             nn.Dropout(self.hparams.cnn_dropout, inplace=True))
 
         self.autoreg = nn.Sequential(    
-            #todo this should be 3 ? probably (number of channels)   
-            #todo sth weird here     
-            #nn.BatchNorm1d(self.hparams.enc_hidden_out_size),
+            #  
+            #     
+            #
             weight_norm(first_conv_layer_autoreg, dim=None),
             nn.ReLU(),
             nn.Dropout(self.hparams.cnn_dropout, inplace=True))
