@@ -8,15 +8,14 @@ from utils.argparser import *
 parser = get_parser()
 hparams = parser.parse_args()
 
-"""
-Import dataloaders and downloads data if respective folders are empty.
-"""
+### Define data path ###
 base_path = Path(__file__).resolve().parents[2]
 data_path = base_path / "tape_data"
 
+### Call to download function in download.py ###
 get_tape_data()
 
-### Import Dataloaders ###
+### Dataloaders to import in main.py ###
 test = JsonDataset(data_path / "test" / "test.json")
 test_loader = DataLoader(test, batch_size=hparams.batch_size, collate_fn=collate_fn)
 

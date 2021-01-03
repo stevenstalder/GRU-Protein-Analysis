@@ -18,7 +18,7 @@ from models.classifier_CNN import *
 Initialization of the PyTorch Lightning model combining the GRU based encoder and the CNN based classification head.
 To account for different length protein sequences when computing the accuracy, we changed the way they are accumulated 
 for the validation and test set by defining validation_epoch_end(), test_epoch_end (). Cross Entropy Loss and Accuracy are 
-computed on a padded sequence with the padding value of -1 then ignored in the computation.
+computed on a padded sequence with the padding value of -1 and then ignored in the computation.
 """
 
 

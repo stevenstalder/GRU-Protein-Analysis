@@ -5,6 +5,11 @@ from torch.nn.utils.weight_norm import weight_norm
 
 from utils.argparser import *
 
+"""
+Defines the CNN classification head. The architecture is very similar to the implementation of the TAPE team.
+We additionally provide an option for dilated convolutions which we have tested to improve overall performance of the model.
+"""
+
 class Classifier_CNN(nn.Module):
 
     def __init__(self):

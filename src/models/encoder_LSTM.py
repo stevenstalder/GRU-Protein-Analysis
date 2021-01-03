@@ -12,6 +12,13 @@ from test_tube import Experiment, HyperOptArgumentParser
 from utils.argparser import *
 from utils.tokenizer import *
 
+"""
+Initialization of the PyTorch modules for the encoder and the Long short-term memory Network which is called in the encoder module. 
+Encoder module is called in the Pytorch Lightning module with autoregressive and CNN classification head. 
+In the encoder - besides the LSTM network - we initialize the parser arguments, the tokenizer and the embedding.
+Embedding dimension is automatically set to the encoder input size.
+"""
+
 class Net_LSTM(nn.Module):
     def __init__(self):
         super().__init__()

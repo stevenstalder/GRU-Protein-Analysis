@@ -4,6 +4,11 @@ import json
 from clint.textui import progress
 from pathlib import Path
 
+"""
+Downloads training, validation and test data if not available locally and stores them into 
+the respective subdirectories in the tape_data directory.
+"""
+
 base_path = Path(__file__).resolve().parents[2]
 data_path = base_path / "tape_data"
 

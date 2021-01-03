@@ -3,10 +3,12 @@ from collections import OrderedDict
 import numpy as np
 
 """
-Init of the two standardized dictionaries for amino acid sequences
+This file defines the tokenizers used by the TAPE team
 """
 
-
+"""
+Initialization of the two standardized dictionaries for amino acid sequences
+"""
 IUPAC_VOCAB = OrderedDict([
     ("<pad>", 0),
     ("<mask>", 1),
@@ -72,7 +74,8 @@ UNIREP_VOCAB = OrderedDict([
 
 
 class TAPETokenizer():
-    """TAPE Tokenizer. Can use different vocabs depending on the model.
+    """
+    TAPE Tokenizer. Can use different vocabs depending on the model.
     """
 
     def __init__(self, vocab: str = 'iupac'):

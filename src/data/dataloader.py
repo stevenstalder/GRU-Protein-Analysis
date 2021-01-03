@@ -2,6 +2,10 @@ import torch
 import json
 from torch.utils.data import DataLoader, IterableDataset
 
+"""
+Here we handle how we iterate through our json files and extract the relevant information. 
+The collate function (collate_fn(batch)) defines how the Dataloaders load batches of data into the models.
+"""
 
 class JsonDataset(IterableDataset):
     def __init__(self, json_file):

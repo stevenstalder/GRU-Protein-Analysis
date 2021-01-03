@@ -1,8 +1,8 @@
 from argparse import ArgumentParser
 
-'''
+"""
 This file contains the declaration of our argument parser
-'''
+"""
 
 # Needed to parse booleans from command line properly
 def str2bool(v):

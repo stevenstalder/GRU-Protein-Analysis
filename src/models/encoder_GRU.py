@@ -15,7 +15,7 @@ from utils.tokenizer import *
 """
 Initialization of the PyTorch modules for the encoder and the Gated Recurrent Unit Network which is called in the encoder module. 
 Encoder module is called in the Pytorch Lightning module with autoregressive and CNN classification head. 
-In the encoder besides of the GRU network we initialize the parser arguments, the tokenizer and the embedding.
+In the encoder - besides the GRU network - we initialize the parser arguments, the tokenizer and the embedding.
 Embedding dimension is automatically set to the encoder input size.
 """
 

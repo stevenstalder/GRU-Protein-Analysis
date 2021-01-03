@@ -1,7 +1,9 @@
 import torch
 from torch import nn
 
-### Accuracy classes for training (TrainAccuracy) and validation + testing (TestAccuracy) ###
+"""
+Accuracy classes for training (TrainAccuracy) and validation + testing (TestAccuracy)
+"""
 
 class TrainAccuracy(nn.Module):
 
