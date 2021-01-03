@@ -51,7 +51,7 @@ class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
         y = pad_sequence(y, batch_first=True, padding_value=-1)
 
         #l = self(x,y).clone().fill_(0)
-        l = torch.rand(self(x,y).size())*3
+        l = (torch.rand(self(x,y).size())*3).cuda()
         stepsize = self.hparams.autoregressive_steps
         for i in range(0, l.size(1), stepsize):
             l_temp = self(x, l.argmax(-1))
