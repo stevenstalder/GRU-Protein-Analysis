@@ -20,15 +20,6 @@
   </p>
 </p>
 
-## About the Project
-
-A fundamental task in understanding evolution and fighting diseases is to gain knowledge about proteins and their
-assembly. Proteins are chains of amino acids formed into a specific structure [Yanofsky et al., 1964]. Due to recent
-research in deep learning and particularly the Natural Language Processing (NLP) area, certain entities of these structures
-– e.g. where a chain meets again or how it is twisted – can be predicted more accurately. To achieve more
-comparable results, Rao et al. [2019] produced five standardized datasets and specific tasks in the area of protein
-prediction. The one tasks we want to take on is the Secondary Structure (SS) prediction.
-
 ## Table of Contents
 * [About the Project](#about-the-project)
 * [Folder Structure](#folder-structure)
@@ -37,6 +28,15 @@ prediction. The one tasks we want to take on is the Secondary Structure (SS) pre
   * [Run the code](#run-the-code)
   * [Reproducing our results](#reproducing-our-results)
 * [Contact](#contact)
+
+## About the Project
+
+A fundamental task in understanding evolution and fighting diseases is to gain knowledge about proteins and their
+assembly. Proteins are chains of amino acids formed into a specific structure [Yanofsky et al., 1964]. Due to recent
+research in deep learning and particularly the Natural Language Processing (NLP) area, certain entities of these structures
+– e.g. where a chain meets again or how it is twisted – can be predicted more accurately. To achieve more
+comparable results, Rao et al. [2019] produced five standardized datasets and specific tasks in the area of protein
+prediction. The one tasks we want to take on is the Secondary Structure (SS) prediction.
 
 ## Folder Structure
 ```
