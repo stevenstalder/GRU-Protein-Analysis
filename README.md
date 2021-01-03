@@ -29,38 +29,14 @@ research in deep learning and particularly the Natural Language Processing (NLP)
 comparable results, Rao et al. [2019] produced five standardized datasets and specific tasks in the area of protein
 prediction. The one tasks we want to take on is the Secondary Structure (SS) prediction.
 
-## The Code 
-
 ## Table of Contents
 * [About the Project](#about-the-project)
 * [Folder Structure](#folder-structure)
-* [Images](#images)
-* [Getting Started](#getting-started)
-  * [Download missing data](#download-missing-data)
-  * [Prerequisites](#prerequisites)
+* [Protein Data](#protein-data)
 * [Usage](#usage)
   * [Run the code](#run-the-code)
-  * [Reproduce our results](#reproduce-our-results)
-    * [Train and predict results](#train-and-predict-results)
-    * [Predict using pretrained models](#predict-using-pretrained-models)
-    * [Find the results](#find-the-results)
-
-## About The Project
-This repository contains the source code for the graded semester project for the [Computational Intelligence Lab 2020 lecture](http://da.inf.ethz.ch/teaching/2020/CIL/) at ETH Zurich.
-Please follow the instructions below to get started and reproduce our results.
-Read the [paper](https://github.com/winbergs/CILlitbang/blob/master/report.pdf) for more information about our experiments and design decisions.
-
-Our final model is a dilated U-Net with transposed convolutional layers and has the following structure:
-
-<div align="center">
-<img src="plots/diagrams/unet_dilated_v2_transposed.png" alt="U-Net Dilated v2 Transposed" width="50%"/>
-</div>
-
-Furthermore, we constructed the following dedicated post-processing pipeline to further refine and cleanup the results.
-
-<div align="center">
-<img src="plots/diagrams/post_processing_pipeline.png" alt="Dedicated Post-Processing Pipeline" width="90%"/>
-</div>
+  * [Reproducing our results](#reproducing-our-results)
+* [Contact](#contact)
 
 ## Folder Structure
 ```
@@ -91,6 +67,14 @@ Furthermore, we constructed the following dedicated post-processing pipeline to 
         ├── accuracy.py                               - Custom accuracy metric
         └── tokenizer.py                              - TAPE Tokenizers
 ```
+
+## Protein Data
+
+## Usage
+
+###Run the code
+
+###Reproducing our results
 
 ## Contact
 
