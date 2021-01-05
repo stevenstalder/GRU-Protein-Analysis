@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/stevenstalder/GRU-Protein-Analysis">
-    <img src="https://miro.medium.com/max/680/1*b1zFnLOeM36CBsF4lA7pvQ.gif" alt="Logo" width="250">
+    <img src="https://miro.medium.com/max/680/1*b1zFnLOeM36CBsF4lA7pvQ.gif" alt="Logo" width="250"> 
   </a>
 
   <h3 align="center">Examining Gated Recurrent Network Architectures in Protein Analysis</h3>
@@ -39,8 +39,7 @@ prediction. We specialized on the prediction task of the protein’s secondary s
 ## Folder Structure
 ```
 ├── README.md
-├── environment.yml                                   - YAML file for conda environment (only for CPU usage)
-├── environment_gpu.yml                               - YAML file for GPU usage working on ETH's Leonhard cluster (recommended)
+├── environment.yml                                   - YAML file for GPU usage working on ETH's Leonhard cluster (recommended)
 ├── tape_data                                             
 │   ├── test                                          - CB513 testing data (will be filled after first run)
 │   ├── training                                      - TAPE training data (will be filled after first run)
@@ -88,7 +87,7 @@ Once the virtual environment is activated you can run the code as follows:
   ```
 - If you want to run our code on ETH's Leonhard cluster, submit the same job as above as follows:
   ```sh
-  bsub -W 24:00 -R "rusage[ngpus_excl_p=1,mem=8192]" "python main.py --encoder_type="gru" --learning_rate=0.01"
+  bsub -W 24:00 -R "rusage[ngpus_excl_p=1,mem=16384]" "python main.py --encoder_type="gru" --learning_rate=0.01"
   ```
 
 ### Reproducing our results
