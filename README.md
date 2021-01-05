@@ -1,6 +1,4 @@
 
-[![MIT License][license-shield]][license-url]
-
 
 <br />
 <p align="center">
@@ -36,7 +34,7 @@ assembly. Proteins are chains of amino acids formed into a specific structure [[
 research in deep learning and particularly the Natural Language Processing (NLP) area, certain entities of these structures
 – e.g. where a chain meets again or how it is twisted – can be predicted more accurately. To achieve more
 comparable results, [[Rao et al. 2019]](https://www.biorxiv.org/content/early/2019/06/20/676825) produced five standardized datasets and specific tasks in the area of protein
-prediction. In this project we take on the Secondary Structure (SS) prediction.
+prediction. We specialized on the prediction task of the protein’s secondary structure. After the discovery of the α- and β-helix structure of proteins by [Pauling and Corey](http://www.jstor.org/stable/88806) in 1953, prediction of those secondary structures is an ongoing field of research.
 
 ## Folder Structure
 ```
@@ -70,7 +68,7 @@ prediction. In this project we take on the Secondary Structure (SS) prediction.
 
 ## Protein Data
 
-We are using the predefined training, validation and test data as provided by the [TAPE group](https://github.com/songlab-cal/tape#data). As defined in TAPE's SS prediction task, we are mapping each amino acid of a protein sequence to one of three labels. Accuracy is reported on a per-amino acid basis on the [CB513 test dataset](https://onlinelibrary.wiley.com/doi/full/10.1002/%28SICI%291097-0134%2819990301%2934%3A4%3C508%3A%3AAID-PROT10%3E3.0.CO%3B2-4).
+We are using the predefined training, validation and test data as provided by the [TAPE benchmark datasets](https://github.com/songlab-cal/tape#data) by Rao et al. As defined in TAPE's SS prediction task, we are mapping each amino acid of a protein sequence to one of three labels. Accuracy is reported on a per-amino acid basis on the [CB513 test dataset](https://onlinelibrary.wiley.com/doi/full/10.1002/%28SICI%291097-0134%2819990301%2934%3A4%3C508%3A%3AAID-PROT10%3E3.0.CO%3B2-4).
 
 ## Usage
 
@@ -121,10 +119,5 @@ Michael Sommer  - sommemic@student.ethz.ch <br>
 Donal Naylor  - dnaylor@student.ethz.ch <br>
 Lukas Klein  - luklein@student.ethz.ch
 
-<!-- MARKDOWN LINKS & IMAGES -->
-
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
-
-[license-url]: https://github.com/
 
 
