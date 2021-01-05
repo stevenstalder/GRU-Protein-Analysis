@@ -4,6 +4,14 @@ import torch.nn.functional as F
 from torch.nn.utils.weight_norm import weight_norm
 from utils.argparser import *
 
+"""
+Defines the autoregressive classification head. CNN architecture with two inputs:
+1. Amino acid encoding, which is processed by a convolutional layer
+2. Previous sequence prediction, processed by masked convolution to make sure that only information available from the past
+is learned
+The results of these convolutions are then concatenated and processed by another final convolution layer
+Masked convolutions based on PixelCNN, specifically the implementation at https://github.com/singh-hrituraj/PixelCNN-Pytorch
+"""
 
 class MaskedConv1d(nn.Conv1d):
     def __init__(self, *args, **kwargs):

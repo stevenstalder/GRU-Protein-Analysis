@@ -15,6 +15,15 @@ from models.encoder_GRU import *
 from models.classifier_autoregressive import *
 
 
+"""
+Initialization of the PyTorch Lightning model combining the GRU based encoder and the autoregressive classification head.
+During training, one of the inputs is the target sequence, with masked convolutions making sure that no information is leaked.
+Validation and testing run the model multiple times in an autoregressive fashion (initial input is seeded randomly). 
+The autoregressive_steps hyperparameter controls how many amino acid structure predictions are taken from each run during
+validation and testing before being fed back to predict the next group.
+Computation of accuracy is done the same way as for the other models.
+"""
+
 class Protein_GRU_Sequencer_Autoregressive(pl.LightningModule):
     def __init__(self):
         super().__init__()
