@@ -72,7 +72,7 @@ We are using the predefined training, validation and test data as provided by th
 
 ## Usage
 
-All essential libraries for the execution of the code are provided in the environment_gpu.yml file from which a new conda environment can be created.
+All essential libraries for the execution of the code are provided in the environment.yml file from which a new conda environment can be created (Linux only).
 
 ### Run the code
 
