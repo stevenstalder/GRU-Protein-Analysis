@@ -111,6 +111,8 @@ For reproducibility, we have fixed a random seed which you can leave at its defa
   python main.py --cnn_dilated=true --enc_bidirectional=true --learning_rate=0.1 --encoder_type="lstm"
   ```
 
+Additionally, we saved the weights of the four best performing models which can be downloaded [here](https://polybox.ethz.ch/index.php/s/qSOcDy3MAh7uGeX/download). To learn how to load a model in PyTorch Lightning please check out their [documentation](https://pytorch-lightning.readthedocs.io/en/latest/weights_loading.html#checkpoint-loading). Note, that the architecture first has to be adapted to fit the one of the saved weights.
+
 ## Contact
 
 Steven Stalder  - staldest@student.ethz.ch <br>
