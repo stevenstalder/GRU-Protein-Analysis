@@ -39,11 +39,9 @@ else:
 
 # Set Logging
 if hparams.logger == True:
-   log_dir = "tb_logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+   log_dir = "tb_logs/fit/biGRU/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
    logger = pl.loggers.TensorBoardLogger(log_dir, name='Protein_SS3_Model')
-   # tensorboard --logdir
-   # Paste into command line from /src directory to start tensorboard on local port 6006. 
-   # More infos: https://www.tensorflow.org/tensorboard/get_started
+   # How to launch Tensorboard: https://www.tensorflow.org/tensorboard/get_started
 else:
    logger = False
 
