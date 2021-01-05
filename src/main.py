@@ -39,7 +39,7 @@ else:
 
 # Set Logging
 if hparams.logger == True:
-   log_dir = "tb_logs/fit/biGRU/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+   log_dir = "tb_logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
    logger = pl.loggers.TensorBoardLogger(log_dir, name='Protein_SS3_Model')
    # How to launch Tensorboard: https://www.tensorflow.org/tensorboard/get_started
 else:
