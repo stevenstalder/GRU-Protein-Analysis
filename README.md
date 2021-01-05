@@ -33,7 +33,7 @@ A fundamental task in understanding evolution and fighting diseases is to gain k
 assembly. Proteins are chains of amino acids formed into a specific structure [[Yanofsky et al., 1964]](https://doi.org/10.1126/science.146.3651.1593). Due to recent
 research in deep learning and particularly the Natural Language Processing (NLP) area, certain entities of these structures
 – e.g. where a chain meets again or how it is twisted – can be predicted more accurately. To achieve more
-comparable results, [[Rao et al. 2019]](https://www.biorxiv.org/content/early/2019/06/20/676825) produced five standardized datasets and specific tasks in the area of protein
+comparable results, [Rao et al. 2019](https://www.biorxiv.org/content/early/2019/06/20/676825) produced five standardized datasets and specific tasks in the area of protein
 prediction. We specialized on the prediction task of the protein’s secondary structure. After the discovery of the α- and β-helix structure of proteins by [Pauling and Corey](http://www.jstor.org/stable/88806) in 1953, prediction of those secondary structures is an ongoing field of research.
 
 ## Folder Structure
